@@ -1,0 +1,77 @@
+---
+description: 
+globs: *.html
+alwaysApply: false
+---
+## HTML Slide Navigation Specification
+
+### Key Features
+- A visually appealing slide-based presentation using HTML and CSS.
+- Navigation buttons placed at the left and right edges of the screen.
+- A persistent page indicator at the bottom showing the current position.
+- Keyboard arrow keys (left/right) for navigation.
+- Prevent navigation beyond the last slide with a toast notification.
+
+---
+
+### Slide Structure
+- Each slide is a full-page section.
+- Slides should have a consistent styling for a clean and modern appearance.
+- Content should be centered within each slide.
+
+```html
+<div class="slide-container">
+    <div class="slide active">Slide 1 Content</div>
+    <div class="slide">Slide 2 Content</div>
+    <div class="slide">Slide 3 Content</div>
+    ...
+</div>
+```
+
+---
+
+### Navigation System
+#### 1. **Navigation Buttons**
+- Always visible at the left and right edges.
+- Styled to be unobtrusive but clear.
+- Clickable to move between slides.
+
+#### 2. **Keyboard Navigation**
+- `Arrow Left (←)`: Move to the previous slide.
+- `Arrow Right (→)`: Move to the next slide.
+- If at the last slide, display a toast notification instead of proceeding further.
+
+#### 3. **Page Indicator**
+- A progress indicator at the bottom of the screen.
+- Shows the current slide number out of the total slides.
+- Updates dynamically when navigating.
+
+---
+
+### Toast Notification
+- Appears when attempting to navigate past the last slide.
+- Disappears automatically after a few seconds.
+- Example message: *"You have reached the last slide."*
+
+```html
+<div id="toast" class="hidden">You have reached the last slide.</div>
+```
+
+---
+
+### Performance & Accessibility
+- Ensure smooth transitions between slides.
+- Use ARIA attributes for accessibility.
+- Optimize for responsiveness on different screen sizes.
+- Provide fallback for users without JavaScript.
+
+### Summary of Functional Requirements
+| Feature            | Description |
+|-------------------|------------|
+| Navigation Buttons | Left & Right buttons for navigation |
+| Keyboard Support  | Left & Right arrow key navigation |
+| Page Indicator    | Displays current slide position |
+| End Notification  | Toast message when reaching the last slide |
+
+This specification ensures a smooth and visually appealing slide navigation experience in an HTML-based presentation format.
+
