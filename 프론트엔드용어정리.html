@@ -1,0 +1,424 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .slide {
+      display: none;
+      height: 100vh;
+      width: 100%;
+      padding: 2rem;
+      transition: all 0.5s ease;
+    }
+    .active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .fade-in {
+      animation: fadeIn 0.8s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .progress-bar {
+      height: 4px;
+      background-color: rgba(139, 92, 246, 0.3);
+    }
+    .progress {
+      height: 100%;
+      background-color: #8b5cf6;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+  <!-- 네비게이션 컨트롤 -->
+  <div class="fixed bottom-4 right-4 z-50 flex space-x-2">
+    <button id="prevBtn" class="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-lg shadow transition">이전</button>
+    <button id="nextBtn" class="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-lg shadow transition">다음</button>
+  </div>
+  
+  <div class="fixed top-0 left-0 w-full z-40">
+    <div class="progress-bar w-full">
+      <div id="progress" class="progress" style="width: 0%"></div>
+    </div>
+  </div>
+  
+  <!-- 슬라이드 컨테이너 -->
+  <div id="slideContainer">
+    <!-- 타이틀 슬라이드 -->
+    <div class="slide active bg-gradient-to-br from-violet-100 to-violet-200">
+      <div class="max-w-5xl mx-auto text-center">
+        <h1 class="text-6xl font-bold text-violet-800 mb-6">프론트엔드 용어 정리</h1>
+        <p class="text-2xl text-violet-600 mb-12">웹 개발자를 위한 필수 용어 가이드</p>
+        <div class="w-32 h-1 bg-violet-500 mx-auto mb-8"></div>
+        <p class="text-lg text-violet-700">2023년 12월</p>
+      </div>
+    </div>
+    
+    <!-- 개요 슬라이드 -->
+    <div class="slide bg-white">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold text-violet-800 mb-8">개요</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-violet-50 p-6 rounded-xl shadow-md transform transition hover:scale-105">
+            <h3 class="text-xl font-semibold text-violet-700 mb-3">주요 내용</h3>
+            <ul class="space-y-2 text-violet-900">
+              <li class="flex items-center"><span class="w-2 h-2 bg-violet-500 rounded-full mr-2"></span> 프론트엔드 기본 용어</li>
+              <li class="flex items-center"><span class="w-2 h-2 bg-violet-500 rounded-full mr-2"></span> 프레임워크 및 라이브러리</li>
+              <li class="flex items-center"><span class="w-2 h-2 bg-violet-500 rounded-full mr-2"></span> 최신 웹 기술 트렌드</li>
+            </ul>
+          </div>
+          <div class="bg-violet-50 p-6 rounded-xl shadow-md transform transition hover:scale-105">
+            <h3 class="text-xl font-semibold text-violet-700 mb-3">기대 효과</h3>
+            <ul class="space-y-2 text-violet-900">
+              <li class="flex items-center"><span class="w-2 h-2 bg-violet-500 rounded-full mr-2"></span> 개발 커뮤니케이션 향상</li>
+              <li class="flex items-center"><span class="w-2 h-2 bg-violet-500 rounded-full mr-2"></span> 기술 문서 이해도 증가</li>
+              <li class="flex items-center"><span class="w-2 h-2 bg-violet-500 rounded-full mr-2"></span> 개발 생산성 향상</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 주요 포인트 슬라이드 -->
+    <div class="slide bg-gradient-to-br from-white to-violet-50">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold text-violet-800 mb-8">주요 프론트엔드 용어</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold text-violet-700 mb-3">HTML/CSS</h3>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">•</span>
+                <span><b>DOM</b>: 문서 객체 모델</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">•</span>
+                <span><b>반응형 디자인</b>: 다양한 화면 크기 대응</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">•</span>
+                <span><b>Flexbox/Grid</b>: 레이아웃 시스템</span>
+              </li>
+            </ul>
+          </div>
+          <div class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold text-violet-700 mb-3">JavaScript</h3>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">•</span>
+                <span><b>ES6+</b>: 모던 자바스크립트</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">•</span>
+                <span><b>비동기 처리</b>: Promise, async/await</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">•</span>
+                <span><b>이벤트 루프</b>: 자바스크립트 실행 모델</span>
+              </li>
+            </ul>
+          </div>
+          <div class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold text-violet-700 mb-3">프레임워크</h3>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">•</span>
+                <span><b>컴포넌트</b>: UI 구성 요소</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">•</span>
+                <span><b>상태 관리</b>: 데이터 흐름 제어</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">•</span>
+                <span><b>가상 DOM</b>: 성능 최적화 기술</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 상세 정보 슬라이드 -->
+    <div class="slide bg-white">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold text-violet-800 mb-8">프레임워크 비교</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse">
+            <thead>
+              <tr class="bg-violet-100">
+                <th class="border border-violet-200 p-3 text-left text-violet-800">프레임워크</th>
+                <th class="border border-violet-200 p-3 text-left text-violet-800">특징</th>
+                <th class="border border-violet-200 p-3 text-left text-violet-800">학습 곡선</th>
+                <th class="border border-violet-200 p-3 text-left text-violet-800">인기도</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hover:bg-violet-50 transition">
+                <td class="border border-violet-200 p-3 font-medium">React</td>
+                <td class="border border-violet-200 p-3">컴포넌트 기반, 가상 DOM</td>
+                <td class="border border-violet-200 p-3">중간</td>
+                <td class="border border-violet-200 p-3">
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-violet-600 h-2.5 rounded-full" style="width: 85%"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="hover:bg-violet-50 transition">
+                <td class="border border-violet-200 p-3 font-medium">Vue</td>
+                <td class="border border-violet-200 p-3">직관적인 API, 점진적 채택</td>
+                <td class="border border-violet-200 p-3">낮음</td>
+                <td class="border border-violet-200 p-3">
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-violet-600 h-2.5 rounded-full" style="width: 70%"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="hover:bg-violet-50 transition">
+                <td class="border border-violet-200 p-3 font-medium">Angular</td>
+                <td class="border border-violet-200 p-3">완전한 프레임워크, TypeScript</td>
+                <td class="border border-violet-200 p-3">높음</td>
+                <td class="border border-violet-200 p-3">
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-violet-600 h-2.5 rounded-full" style="width: 60%"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="hover:bg-violet-50 transition">
+                <td class="border border-violet-200 p-3 font-medium">Svelte</td>
+                <td class="border border-violet-200 p-3">컴파일 시점 최적화, 적은 코드</td>
+                <td class="border border-violet-200 p-3">낮음</td>
+                <td class="border border-violet-200 p-3">
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-violet-600 h-2.5 rounded-full" style="width: 40%"></div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 그래프 슬라이드 -->
+    <div class="slide bg-gradient-to-br from-white to-violet-50">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold text-violet-800 mb-8">프론트엔드 기술 트렌드</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-violet-700 mb-4">연도별 인기 기술</h3>
+            <div class="h-64 flex items-end space-x-4 pt-4">
+              <div class="flex flex-col items-center">
+                <div class="bg-violet-300 hover:bg-violet-400 transition w-12 rounded-t-lg" style="height: 30%"></div>
+                <p class="mt-2 text-sm">2019</p>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="bg-violet-400 hover:bg-violet-500 transition w-12 rounded-t-lg" style="height: 45%"></div>
+                <p class="mt-2 text-sm">2020</p>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="bg-violet-500 hover:bg-violet-600 transition w-12 rounded-t-lg" style="height: 65%"></div>
+                <p class="mt-2 text-sm">2021</p>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="bg-violet-600 hover:bg-violet-700 transition w-12 rounded-t-lg" style="height: 80%"></div>
+                <p class="mt-2 text-sm">2022</p>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="bg-violet-700 hover:bg-violet-800 transition w-12 rounded-t-lg" style="height: 95%"></div>
+                <p class="mt-2 text-sm">2023</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-violet-700 mb-4">주요 기술 채택률</h3>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium text-violet-800">TypeScript</span>
+                  <span class="text-sm font-medium text-violet-800">78%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                  <div class="bg-violet-600 h-2.5 rounded-full" style="width: 78%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium text-violet-800">Tailwind CSS</span>
+                  <span class="text-sm font-medium text-violet-800">65%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                  <div class="bg-violet-600 h-2.5 rounded-full" style="width: 65%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium text-violet-800">Next.js</span>
+                  <span class="text-sm font-medium text-violet-800">54%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                  <div class="bg-violet-600 h-2.5 rounded-full" style="width: 54%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium text-violet-800">WebAssembly</span>
+                  <span class="text-sm font-medium text-violet-800">32%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                  <div class="bg-violet-600 h-2.5 rounded-full" style="width: 32%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 결론 슬라이드 -->
+    <div class="slide bg-white">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold text-violet-800 mb-8">결론 및 제안</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div class="bg-violet-50 p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-violet-700 mb-4">핵심 요약</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">✓</span>
+                <span>프론트엔드 용어 이해는 개발 효율성 향상에 필수적</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">✓</span>
+                <span>프레임워크별 특성 이해로 적절한 기술 선택 가능</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">✓</span>
+                <span>최신 트렌드 파악으로 경쟁력 유지</span>
+              </li>
+            </ul>
+          </div>
+          <div class="bg-violet-50 p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-violet-700 mb-4">다음 단계 제안</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">→</span>
+                <span>정기적인 기술 용어 업데이트 세션 진행</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">→</span>
+                <span>팀 내 용어 사전 구축 및 공유</span>
+              </li>
+              <li class="flex items-start">
+                <span class="text-violet-500 font-bold mr-2">→</span>
+                <span>실무 적용을 위한 핸즈온 워크샵 개최</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="bg-violet-600 text-white p-6 rounded-xl shadow-lg text-center">
+          <h3 class="text-2xl font-bold mb-4">지금 바로 시작하세요!</h3>
+          <p class="mb-6">프론트엔드 용어 마스터하고 개발 생산성을 높이세요</p>
+          <button class="bg-white text-violet-700 hover:bg-violet-100 font-bold py-2 px-6 rounded-lg transition transform hover:scale-105">
+            자료 다운로드
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- FAQ 슬라이드 -->
+    <div class="slide bg-gradient-to-br from-white to-violet-50">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold text-violet-800 mb-8">자주 묻는 질문</h2>
+        <div class="space-y-4">
+          <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition">
+            <button class="faq-toggle w-full flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-violet-700">프론트엔드 개발자가 꼭 알아야 할 용어는 무엇인가요?</h3>
+              <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content hidden mt-2 text-gray-700">
+              <p>HTML, CSS, JavaScript 기본 용어부터 DOM, 이벤트 루프, 비동기 처리, 프레임워크 관련 용어(컴포넌트, 상태 관리, 라우팅 등)까지 폭넓게 이해하는 것이 중요합니다.</p>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition">
+            <button class="faq-toggle w-full flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-violet-700">어떤 프레임워크를 배우는 것이 좋을까요?</h3>
+              <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content hidden mt-2 text-gray-700">
+              <p>현재 취업 시장에서는 React가 가장 수요가 많지만, 프로젝트 특성과 개인 선호도에 따라 Vue나 Angular도 좋은 선택입니다. 기본 JavaScript에 능숙해진 후 프레임워크를 배우는 것을 추천합니다.</p>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition">
+            <button class="faq-toggle w-full flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-violet-700">프론트엔드 기술 트렌드를 어떻게 따라가야 할까요?</h3>
+              <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content hidden mt-2 text-gray-700">
+              <p>기술 블로그, GitHub 트렌드, 개발자 커뮤니티(Stack Overflow, Reddit 등), 컨퍼런스 영상 등을 정기적으로 확인하는 것이 좋습니다. 모든 트렌드를 따라갈 필요는 없으며, 핵심 기술에 집중하는 것이 중요합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 슬라이드 기능 구현
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progress = document.getElementById('progress');
+    let currentSlide = 0;
+    
+    function showSlide(n) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (n + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active', 'fade-in');
+      updateProgress();
+    }
+    
+    function updateProgress() {
+      const progressPercentage = ((currentSlide + 1) / slides.length) * 100;
+      progress.style.width = `${progressPercentage}%`;
+    }
+    
+    prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+    
+    // FAQ 토글 기능
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    faqToggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const content = toggle.nextElementSibling;
+        content.classList.toggle('hidden');
+        const icon = toggle.querySelector('svg');
+        icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    });
+    
+    // 키보드 네비게이션
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        showSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft') {
+        showSlide(currentSlide - 1);
+      }
+    });
+    
+    // 초기 진행 상태 업데이트
+    updateProgress();
+  </script>
+</body>
+</html>
