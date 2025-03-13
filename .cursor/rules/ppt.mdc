@@ -1,5 +1,5 @@
 ---
-description: 
+description: The HTML Slide Navigation Specification defines a structured, interactive slide-based presentation system with smooth navigation, keyboard controls, a dynamic page indicator, toast notifications, and support for interactive charts using ApexCharts.
 globs: *.html
 alwaysApply: false
 ---
@@ -11,6 +11,8 @@ alwaysApply: false
 - A persistent page indicator at the bottom showing the current position.
 - Keyboard arrow keys (left/right) for navigation.
 - Prevent navigation beyond the last slide with a toast notification.
+- **Support for embedding dynamic charts using ApexCharts.**
+- **Utilization of Feather Icons for a modern UI experience.**
 
 ---
 
@@ -31,30 +33,106 @@ alwaysApply: false
 ---
 
 ### Navigation System
-#### 1. **Navigation Buttons**
+#### 1. **Navigation Buttons (with Icons)**
 - Always visible at the left and right edges.
 - Styled to be unobtrusive but clear.
 - Clickable to move between slides.
+- Uses **Feather Icons** for a clean look.
+
+```html
+<button id="prev-slide" class="nav-button">
+    <i data-feather="arrow-left"></i>
+</button>
+<button id="next-slide" class="nav-button">
+    <i data-feather="arrow-right"></i>
+</button>
+```
 
 #### 2. **Keyboard Navigation**
 - `Arrow Left (←)`: Move to the previous slide.
 - `Arrow Right (→)`: Move to the next slide.
 - If at the last slide, display a toast notification instead of proceeding further.
 
-#### 3. **Page Indicator**
+#### 3. **Page Indicator (with Icons)**
 - A progress indicator at the bottom of the screen.
 - Shows the current slide number out of the total slides.
 - Updates dynamically when navigating.
+- Uses **Feather Icons** for aesthetics.
+
+```html
+<div class="page-indicator">
+    <i data-feather="circle"></i>
+    <span id="slide-number">1 / X</span>
+</div>
+```
 
 ---
 
-### Toast Notification
+### Toast Notification (with Icon)
 - Appears when attempting to navigate past the last slide.
 - Disappears automatically after a few seconds.
-- Example message: *"You have reached the last slide."*
+- Includes an **alert icon** for better visual feedback.
 
 ```html
-<div id="toast" class="hidden">You have reached the last slide.</div>
+<div id="toast" class="hidden">
+    <i data-feather="alert-circle"></i>
+    <span>You have reached the last slide.</span>
+</div>
+```
+
+---
+
+### Chart Integration
+- Use **ApexCharts** for embedding dynamic and interactive charts.
+- Include the following script in the document:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
+```
+
+- Place a container inside a slide to hold the chart:
+
+```html
+<div id="chart-container"></div>
+```
+
+- Example chart initialization:
+
+```html
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var options = {
+        chart: {
+            type: 'line',
+            height: 350
+        },
+        series: [{
+            name: 'Sample Data',
+            data: [10, 20, 30, 40, 50]
+        }],
+        xaxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May']
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart-container"), options);
+    chart.render();
+});
+</script>
+```
+
+---
+
+### Feather Icons Integration
+To ensure Feather Icons work properly, include the following script at the end of your HTML file:
+
+```html
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      feather.replace();
+  });
+</script>
 ```
 
 ---
@@ -68,10 +146,11 @@ alwaysApply: false
 ### Summary of Functional Requirements
 | Feature            | Description |
 |-------------------|------------|
-| Navigation Buttons | Left & Right buttons for navigation |
+| Navigation Buttons | Left & Right buttons with Feather Icons |
 | Keyboard Support  | Left & Right arrow key navigation |
-| Page Indicator    | Displays current slide position |
-| End Notification  | Toast message when reaching the last slide |
+| Page Indicator    | Displays current slide position with icons |
+| End Notification  | Toast message with alert icon when reaching the last slide |
+| Chart Support     | Embed interactive ApexCharts |
+| Icon Integration  | Uses Feather Icons for UI elements |
 
-This specification ensures a smooth and visually appealing slide navigation experience in an HTML-based presentation format.
-
+This specification ensures a smooth and visually appealing slide navigation experience in an HTML-based presentation format, with the added capability of integrating **Feather Icons** and **dynamic charts**.
