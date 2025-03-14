@@ -11,7 +11,6 @@
   <script src="https://cdn.tailwindcss.com/3.4.16"></script>
   <script src="https://unpkg.com/feather-icons@4.29.1"></script>
   <script src="https://unpkg.com/apexcharts@4.5.0"></script>
-  <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1" />
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 </head>
 <body>
