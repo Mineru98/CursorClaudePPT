@@ -10,7 +10,7 @@ alwaysApply: false
 - Navigation buttons placed at the left and right edges of the screen.
 - A persistent page indicator at the bottom showing the current position.
 - Keyboard arrow keys (left/right) for navigation.
-- Prevent navigation beyond the last slide with a toast notification.
+- Prevent navigation beyond the first and last slides with a toast notification.
 - **Support for embedding dynamic charts using ApexCharts.**
 - **Utilization of Feather Icons for a modern UI experience.**
 
@@ -51,7 +51,7 @@ alwaysApply: false
 #### 2. **Keyboard Navigation**
 - `Arrow Left (←)`: Move to the previous slide.
 - `Arrow Right (→)`: Move to the next slide.
-- If at the last slide, display a toast notification instead of proceeding further.
+- If at the first or last slide, display a toast notification instead of proceeding further.
 
 #### 3. **Page Indicator (with Icons)**
 - A progress indicator at the bottom of the screen.
@@ -69,14 +69,14 @@ alwaysApply: false
 ---
 
 ### Toast Notification (with Icon)
-- Appears when attempting to navigate past the last slide.
+- Appears when attempting to navigate past the first or last slide.
 - Disappears automatically after a few seconds.
 - Includes an **alert icon** for better visual feedback.
 
 ```html
 <div id="toast" class="hidden">
     <i data-feather="alert-circle"></i>
-    <span>You have reached the last slide.</span>
+    <span>You cannot move further in this direction.</span>
 </div>
 ```
 
@@ -149,7 +149,7 @@ To ensure Feather Icons work properly, include the following script at the end o
 | Navigation Buttons | Left & Right buttons with Feather Icons |
 | Keyboard Support  | Left & Right arrow key navigation |
 | Page Indicator    | Displays current slide position with icons |
-| End Notification  | Toast message with alert icon when reaching the last slide |
+| End Notification  | Toast message with alert icon when reaching the first or last slide |
 | Chart Support     | Embed interactive ApexCharts |
 | Icon Integration  | Uses Feather Icons for UI elements |
 
