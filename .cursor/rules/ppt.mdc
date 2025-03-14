@@ -3,12 +3,6 @@ description: The HTML Slide Navigation Specification defines a structured, inter
 globs: *.html
 alwaysApply: false
 ---
----
-description: The HTML Slide Navigation Specification defines a structured, interactive slide-based presentation system with smooth navigation, keyboard controls, a dynamic page indicator, toast notifications, and support for interactive charts using ApexCharts.
-globs: *.html
-alwaysApply: false
----
-
 ## HTML Slide Navigation Specification
 
 ### Key Features
