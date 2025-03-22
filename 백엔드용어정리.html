@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="https://unpkg.com/feather-icons@4.29.1"></script>
+  <script src="https://unpkg.com/apexcharts@4.5.0"></script>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <title>백엔드 개발 용어 정리</title>
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+    .slide {
+      display: none;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .active {
+      display: flex;
+    }
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chart-container {
+      height: 250px;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              100: '#EDE9F5',
+              200: '#D1C7E8',
+              300: '#B4A4DA',
+              400: '#9782CC',
+              500: '#7B60BE',
+              600: '#624D98',
+              700: '#4A3A73',
+              800: '#31264D',
+              900: '#191326',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-primary-100">
+  <!-- 내비게이션 및 컨트롤 -->
+  <div class="fixed bottom-4 left-0 right-0 z-50 flex justify-center gap-2 mb-2">
+    <button id="prev" class="px-4 py-2 text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition duration-300">
+      <i data-feather="arrow-left" class="w-4 h-4"></i>
+    </button>
+    <div class="flex items-center justify-center px-6 py-2 bg-white rounded-lg shadow">
+      <span id="current-slide">1</span>/<span id="total-slides"></span>
+    </div>
+    <button id="next" class="px-4 py-2 text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition duration-300">
+      <i data-feather="arrow-right" class="w-4 h-4"></i>
+    </button>
+  </div>
+
+  <!-- 진행 표시줄 -->
+  <div class="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
+    <div id="progress" class="h-full bg-primary-500 progress-bar" style="width: 0%"></div>
+  </div>
+
+  <!-- 메뉴 버튼 -->
+  <div class="fixed top-4 right-4 z-50">
+    <button id="menu-button" class="p-2 text-white bg-primary-600 rounded-full hover:bg-primary-700 transition duration-300">
+      <i data-feather="menu" class="w-5 h-5"></i>
+    </button>
+    <div id="menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl">
+      <div class="p-4 overflow-y-auto max-h-96">
+        <h3 class="text-lg font-bold text-primary-700 mb-3">목차</h3>
+        <ul id="menu-items" class="space-y-2">
+          <!-- 동적으로 생성됨 -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 슬라이드 컨테이너 -->
+  <div id="slides-container">
+    <!-- 타이틀 슬라이드 -->
+    <section class="slide active flex flex-col items-center justify-center p-8 bg-gradient-to-br from-primary-200 to-primary-400">
+      <div class="max-w-4xl w-full bg-white/90 rounded-2xl p-12 backdrop-blur shadow-xl">
+        <h1 class="text-5xl font-bold text-primary-700 mb-6 animate-fadeIn">백엔드 개발 용어 정리</h1>
+        <p class="text-xl text-gray-600 mb-8 animate-fadeIn" style="animation-delay: 0.2s">API, 서버, 데이터베이스 개념 이해하기</p>
+        <div class="flex gap-4 animate-fadeIn" style="animation-delay: 0.4s">
+          <div class="flex items-center p-4 bg-primary-100 rounded-lg">
+            <i data-feather="server" class="w-8 h-8 text-primary-600 mr-3"></i>
+            <span class="text-primary-700 font-semibold">API</span>
+          </div>
+          <div class="flex items-center p-4 bg-primary-100 rounded-lg">
+            <i data-feather="hard-drive" class="w-8 h-8 text-primary-600 mr-3"></i>
+            <span class="text-primary-700 font-semibold">서버</span>
+          </div>
+          <div class="flex items-center p-4 bg-primary-100 rounded-lg">
+            <i data-feather="database" class="w-8 h-8 text-primary-600 mr-3"></i>
+            <span class="text-primary-700 font-semibold">데이터베이스</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 개요 슬라이드 -->
+    <section class="slide flex flex-col items-center justify-center p-8 bg-white">
+      <div class="max-w-4xl w-full">
+        <h2 class="text-3xl font-bold text-primary-700 mb-6">개발 용어의 중요성</h2>
+        <p class="text-lg text-gray-600 mb-8">
+          개발 과정에서 마주치게 되는 다양한 용어들을 이해하는 것은 프로젝트를 원활하게 진행하는 데 큰 도움이 됩니다.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="p-6 bg-primary-50 rounded-xl shadow hover:shadow-lg transition duration-300">
+            <div class="flex items-center mb-4">
+              <div class="p-3 rounded-full bg-primary-200">
+                <i data-feather="server" class="w-6 h-6 text-primary-700"></i>
+              </div>
+              <h3 class="ml-4 text-xl font-semibold text-primary-700">API</h3>
+            </div>
+            <p class="text-gray-600">애플리케이션 간 상호작용을 가능하게 하는 인터페이스</p>
+          </div>
+          
+          <div class="p-6 bg-primary-50 rounded-xl shadow hover:shadow-lg transition duration-300">
+            <div class="flex items-center mb-4">
+              <div class="p-3 rounded-full bg-primary-200">
+                <i data-feather="hard-drive" class="w-6 h-6 text-primary-700"></i>
+              </div>
+              <h3 class="ml-4 text-xl font-semibold text-primary-700">서버</h3>
+            </div>
+            <p class="text-gray-600">데이터와 서비스를 제공하는 컴퓨터 시스템</p>
+          </div>
+          
+          <div class="p-6 bg-primary-50 rounded-xl shadow hover:shadow-lg transition duration-300">
+            <div class="flex items-center mb-4">
+              <div class="p-3 rounded-full bg-primary-200">
+                <i data-feather="database" class="w-6 h-6 text-primary-700"></i>
+              </div>
+              <h3 class="ml-4 text-xl font-semibold text-primary-700">데이터베이스</h3>
+            </div>
+            <p class="text-gray-600">체계적인 데이터 저장 및 관리 시스템</p>
+          </div>
+        </div>
+        
+        <div class="p-4 bg-primary-100 rounded-lg border border-primary-200">
+          <div class="flex items-start">
+            <i data-feather="info" class="w-5 h-5 text-primary-600 mt-1 mr-3"></i>
+            <p class="text-primary-700">이 프레젠테이션에서는 백엔드 개발의 핵심 용어를 쉽게 이해할 수 있도록 설명합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API 섹션 - 소개 -->
+    <section class="slide flex flex-col items-center justify-center p-8 bg-gradient-to-r from-white to-primary-50">
+      <div class="max-w-4xl w-full">
+        <div class="flex items-center mb-6">
+          <i data-feather="server" class="w-8 h-8 text-primary-600 mr-4"></i>
+          <h2 class="text-3xl font-bold text-primary-700">1. API (Application Programming Interface)</h2>
+        </div>
+        
+        <div class="mb-8">
+          <p class="text-lg text-gray-700 mb-4">
+            애플리케이션 프로그래밍 인터페이스는 소프트웨어나 프로그램이 서로 상호작용할 수 있도록 도와주는 도구입니다.
+          </p>
+          <p class="text-lg text-gray-700">
+            API는 다른 시스템이나 애플리케이션의 기능을 사용할 수 있게 해주는 '메신저' 역할을 합니다.
+          </p>
+        </div>
+        
+        <div class="p-6 bg-white rounded-xl shadow-lg">
+          <h3 class="text-xl font-semibold text-primary-700 mb-4">API 동작 예시</h3>
+          <div class="flex flex-col md:flex-row gap-4 items-center">
+            <div class="flex-1 p-4 bg-primary-50 rounded-lg">
+              <div class="flex items-center mb-2">
+                <i data-feather="smartphone" class="w-5 h-5 text-primary-600 mr-2"></i>
+                <span class="font-medium text-primary-700">날씨 앱</span>
+              </div>
+              <p class="text-gray-600 text-sm">사용자가 날씨 정보 요청</p>
+            </div>
+            <div class="hidden md:block">
+              <i data-feather="arrow-right" class="w-6 h-6 text-primary-400"></i>
+            </div>
+            <div class="block md:hidden">
+              <i data-feather="arrow-down" class="w-6 h-6 text-primary-400"></i>
+            </div>
+            <div class="flex-1 p-4 bg-primary-100 rounded-lg">
+              <div class="flex items-center mb-2">
+                <i data-feather="code" class="w-5 h-5 text-primary-600 mr-2"></i>
+                <span class="font-medium text-primary-700">날씨 API</span>
+              </div>
+              <p class="text-gray-600 text-sm">요청을 처리하고 데이터 중개</p>
+            </div>
+            <div class="hidden md:block">
+              <i data-feather="arrow-right" class="w-6 h-6 text-primary-400"></i>
+            </div>
+            <div class="block md:hidden">
+              <i data-feather="arrow-down" class="w-6 h-6 text-primary-400"></i>
+            </div>
+            <div class="flex-1 p-4 bg-primary-50 rounded-lg">
+              <div class="flex items-center mb-2">
+                <i data-feather="database" class="w-5 h-5 text-primary-600 mr-2"></i>
+                <span class="font-medium text-primary-700">날씨 서버</span>
+              </div>
+              <p class="text-gray-600 text-sm">날씨 데이터 제공</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API 섹션 - 용어 설명 -->
+    <section class="slide flex flex-col items-center justify-center p-8 bg-gradient-to-r from-white to-primary-50">
+      <div class="max-w-4xl w-full">
+        <h2 class="text-3xl font-bold text-primary-700 mb-6">API 관련 주요 용어</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="p-5 bg-white rounded-xl shadow hover:shadow-lg transition duration-300">
+            <h3 class="text-xl font-semibold text-primary-700 mb-3">Endpoint</h3>
+            <p class="text-gray-600 mb-3">API가 호스팅되는 서버의 특정 URL 주소입니다.</p>
+            <div class="p-3 bg-gray-50 rounded-lg text-sm font-mono">
+              https://api.example.com/users
+            </div>
+          </div>
+          
+          <div class="p-5 bg-white rounded-xl shadow hover:shadow-lg transition duration-300">
+            <h3 class="text-xl font-semibold text-primary-700 mb-3">Request & Response</h3>
+            <p class="text-gray-600 mb-3">클라이언트의 요청과 서버의 응답을 나타냅니다.</p>
+            <div class="flex items-center gap-2">
+              <div class="flex-1 p-2 bg-primary-50 rounded-lg text-xs">
+                <span class="font-semibold text-primary-700">Request</span>: 정보 요청
+              </div>
+              <i data-feather="refresh-cw" class="w-4 h-4 text-primary-400"></i>
+              <div class="flex-1 p-2 bg-primary-50 rounded-lg text-xs">
+                <span class="font-semibold text-primary-700">Response</span>: 서버 응답
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-5 bg-white rounded-xl shadow hover:shadow-lg transition duration-300">
+            <h3 class="text-xl font-semibold text-primary-700 mb-3">HTTP Methods</h3>
+            <p class="text-gray-600 mb-2">웹에서 데이터를 주고받는 방법을 정의합니다.</p>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div class="p-2 bg-green-50 rounded-lg text-green-700">GET: 데이터 조회</div>
+              <div class="p-2 bg-blue-50 rounded-lg text-blue-700">POST: 데이터 생성</div>
+              <div class="p-2 bg-yellow-50 rounded-lg text-yellow-700">PUT: 데이터 수정</div>
+              <div class="p-2 bg-red-50 rounded-lg text-red-700">DELETE: 데이터 삭제</div>
+            </div>
+          </div>
+          
+          <div class="p-5 bg-white rounded-xl shadow hover:shadow-lg transition duration-300">
+            <h3 class="text-xl font-semibold text-primary-700 mb-3">JSON</h3>
+            <p class="text-gray-600 mb-3">데이터 교환을 위한 경량 포맷입니다.</p>
+            <div class="p-3 bg-gray-50 rounded-lg text-sm font-mono overflow-x-auto">
+              {<br>
+              &nbsp;&nbsp;"name": "홍길동",<br>
+              &nbsp;&nbsp;"age": 30,<br>
+              &nbsp;&nbsp;"role": "개발자"<br>
+              }
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-5 bg-white rounded-xl shadow">
+          <h3 class="text-xl font-semibold text-primary-700 mb-3">REST</h3>
+          <p class="text-gray-600 mb-4">
+            Representational State Transfer, 웹 API 설계를 위한 아키텍처 스타일입니다.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full">자원 기반</span>
+            <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full">상태 비저장</span>
+            <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full">표준 HTTP 메소드</span>
+            <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full">다양한 표현</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 서버 섹션 - 소개 -->
+    <section class="slide flex flex-col items-center justify-center p-8 bg-gradient-to-r from-white to-primary-50">
+      <div class="max-w-4xl w-full">
+        <div class="flex items-center mb-6">
+          <i data-feather="hard-drive" class="w-8 h-8 text-primary-600 mr-4"></i>
+          <h2 class="text-3xl font-bold text-primary-700">2. 서버(Server)</h2>
+        </div>
+        
+        <div class="mb-8">
+          <p class="text-lg text-gray-700 mb-4">
+            네트워크 상에서 데이터나 서비스를 제공하는 컴퓨터나 소프트웨어 시스템입니다.
+          </p>
+          <p class="text-lg text-gray-700 mb-4">
+            사용자가 웹 브라우저나 애플리케이션을 통해 정보를 요청할 때, 서버는 그 요청을 받아 처리하고 필요한 데이터를 사용자에게 돌려줍니다.
+          </p>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-primary-700 mb-4">서버-클라이언트 모델</h3>
+            <div class="chart-container" id="server-client-chart"></div>
+          </div>
+          <div class="p-6 bg-gray-50">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 bg-primary-50 rounded-lg">
+                <h4 class="font-medium text-primary-700 mb-2">서버의 역할</h4>
+                <ul class="text-gray-600 space-y-2">
+                  <li class="flex items-start">
+                    <i data-feather="check" class="w-4 h-4 text-primary-500 mt-1 mr-2"></i>
+                    <span>데이터 저장 및 관리</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i data-feather="check" class="w-4 h-4 text-primary-500 mt-1 mr-2"></i>
+                    <span>클라이언트 요청 처리</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i data-feather="check" class="w-4 h-4 text-primary-500 mt-1 mr-2"></i>
+                    <span>비즈니스 로직 실행</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="p-4 bg-primary-50 rounded-lg">
+                <h4 class="font-medium text-primary-700 mb-2">클라이언트의 역할</h4>
+                <ul class="text-gray-600 space-y-2">
+                  <li class="flex items-start">
+                    <i data-feather="check" class="w-4 h-4 text-primary-500 mt-1 mr-2"></i>
+                    <span>사용자 인터페이스 제공</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i data-feather="check" class="w-4 h-4 text-primary-500 mt-1 mr-2"></i>
+                    <span>서버에 요청 전송</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i data-feather="check" class="w-4 h-4 text-primary-500 mt-1 mr-2"></i>
+                    <span>응답 데이터 표시</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 서버 섹션 - 용어 설명 -->
+    <section class="slide flex flex-col items-center justify-center p-8 bg-gradient-to-r from-white to-primary-50">
+      <div class="max-w-4xl w-full">
+        <h2 class="text-3xl font-bold text-primary-700 mb-6">서버 관련 주요 용어</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="p-5 bg-white rounded-xl shadow hover:shadow-lg transition duration-300">
+            <h3 class="text-xl font-semibold text-primary-700 mb-3">호스팅 (Hosting)</h3>
+            <p class="text-gray-600">인터넷 상에서 웹사이트나 웹 애플리케이션을 사용할 수 있도록 서버 공간을 제공하는 서비스입니다.</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="px-2 py-1 bg-primary-100 rounded text-xs text-primary-700">클라우드 호스팅</span>
+              <span class="px-2 py-1 bg-primary-100 rounded text-xs text-primary-700">공유 호스팅</span>
+              <span class="px-2 py-1 bg-primary-100 rounded text-xs text-primary-700">VPS</span>
+            </div>
+          </div>
+          
+          <div class="p-5 bg-white rounded-xl shadow hover:shadow-lg transition duration-300">
+            <h3 class="text-xl font-semibold text-primary-700 mb-3">IP 주소 (IP Address)</h3>
+            <p class="text-gray-600 mb-3">인터넷상에서 컴퓨터나 다른 장치를 식별하는 데 사용되는 고유한 번호입니다.</p>
+            <div class="flex gap-4">
+              <div class="flex-1 p-2 bg-primary-50 rounded-lg text-center text-sm">
+                <span class="font-medium text-primary-700">IPv4</span>
+                <div class="text-gray-600 mt-1">192.168.1.1</div>
+              </div>
+              <div class="flex-1 p-2 bg-primary-50 rounded-lg text-center text-sm">
+                <span class="font-medium text-primary-700">IPv6</span>
+                <div class="text-gray-600 mt-1 text-xs">2001:0db8:85a3:0000:0000:8a2e:0370:7334</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-5 bg-white rounded-xl shadow hover:shadow-lg transition duration-300">
+            <h3 class="text-xl font-semibold text-primary-700 mb-3">포트 (Port)</h3>
+            <p class="text-gray-600 mb-3">컴퓨터나 서버에서 특정 서비스에 대한 접근 지점을 나타내는 숫자입니다.</p>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div class="p-2 bg-primary-50 rounded-lg">
+                <span class="font-medium text-primary-700">HTTP:</span> 80
+              </div>
+              <div class="p-2 bg-primary-50 rounded-lg">
+                <span class="font-medium text-primary-700">HTTPS:</span> 443
+              </div>
+              <div class="p-2 bg-primary-50 rounded-lg">
+                <span class="font-medium text-primary-700">FTP:</span> 21
+              </div>
+              <div class="p-2 bg-primary-50 rounded-lg">
+                <span class="font-medium text-primary-700">SSH:</span> 22
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-5 bg-white rounded-xl shadow hover:shadow-lg transition duration-300">
+            <h3 class="text-xl font-semibold text-primary-700 mb-3">프로토콜 (Protocol)</h3>
+            <p class="text-gray-600 mb-3">컴퓨터나 장치들이 서로 통신할 때 지켜야 할 규칙이나 표준입니다.</p>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div class="p-2 bg-primary-50 rounded-lg">
+                <span class="font-medium text-primary-700">HTTP/HTTPS</span>
+                <div class="text-gray-600 text-xs mt-1">웹 통신 프로토콜</div>
+              </div>
+              <div class="p-2 bg-primary-50 rounded-lg">
+                <span class="font-medium text-primary-700">TCP/IP</span>
+                <div class="text-gray-600 text-xs mt-1">인터넷 기본 프로토콜</div>
+              </div>
+              <div class="p-2 bg-primary-50 rounded-lg">
+                <span class="font-medium text-primary-700">SMTP</span>
+                <div class="text-gray-600 text-xs mt-1">이메일 전송 프로토콜</div>
+              </div>
+              <div class="p-2 bg-primary-50 rounded-lg">
+                <span class="font-medium text-primary-700">FTP</span>
+                <div class="text-gray-600 text-xs mt-1">파일 전송 프로토콜</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-5 bg-white rounded-xl shadow hover:shadow-lg transition duration-300">
+            <h3 class="text-xl font-semibold text-primary-700 mb-3">로드 밸런싱 (Load Balancing)</h3>
+            <p class="text-gray-600 mb-3">네트워크 트래픽이나 요청을 여러 서버에 고르게 분산시켜 각 서버에 가해지는 부하를 분산시키는 기술입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
